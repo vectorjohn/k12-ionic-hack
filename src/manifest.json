@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "K12 Ionic Hack",
+  "short_name": "K12IonicHack",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
