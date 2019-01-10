@@ -4,7 +4,6 @@
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
-            <!--<div class="date">[date]</div>-->
             Hi, [first_name]
         </ion-title>
     </ion-toolbar>
@@ -12,119 +11,61 @@
 
 <ion-content>
 
-    <ion-card>
-        <ion-card-header color="primary">
-            <ion-card-title>
-                <ion-icon class="pull-right" name="close"></ion-icon>
-                <ion-icon name="warning"></ion-icon>
-                Overdue
-            </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
+    <!-- Overdue -->
+    <app-list-card [title]="'Overdue'" [type]="'warning'" [icon]="'warning'" *ngIf="showOverdue" [items]="overdueItems" (hide)="hideOverdue($event)"></app-list-card>
 
-            <ion-list>
-                <ion-item>
-                    <ion-avatar slot="start">
-                        <img src="/assets/images/backgrounds/class/peacock.jpg"/>
-                    </ion-avatar>
-                    <ion-label>
-                        <h2>Polynomials</h2>
-                        <h3>Algebra XXI</h3>
-                        <p>Summary of it here</p>
-                    </ion-label>
-                    <ion-fab vertical="top" horizontal="end">
-                        <ion-fab-button size="small">
-                            <ion-icon name="more"></ion-icon>
-                        </ion-fab-button>
-                        <ion-fab-list side="start">
-                            <ion-fab-button>
-                                <ion-icon name="cloud-download"></ion-icon>
-                            </ion-fab-button>
-                            <ion-fab-button>
-                                <ion-icon name="link"></ion-icon>
-                            </ion-fab-button>
-                        </ion-fab-list>
-                    </ion-fab>
-                </ion-item>
+    <!-- Messages -->
+    <app-list-card [title]="'Upcoming'" [type]="'primary'" [icon]="'book'" *ngIf="showMessages" [items]="overdueItems" (hide)="hideMessages($event)"></app-list-card>
 
-                <ion-item>
-                    <ion-avatar slot="start">
-                        <img src="/assets/images/backgrounds/class/cheetah.jpg"/>
-                    </ion-avatar>
-                    <ion-label>
-                        <h2>Polynomials</h2>
-                        <h3>Algebra XXI</h3>
-                        <p>Summary of it here</p>
-                    </ion-label>
-                    <ion-fab vertical="top" horizontal="end">
-                        <ion-fab-button size="small">
-                            <ion-icon name="more"></ion-icon>
-                        </ion-fab-button>
-                        <ion-fab-list side="start">
-                            <ion-fab-button>
-                                <ion-icon name="cloud-download"></ion-icon>
-                            </ion-fab-button>
-                            <ion-fab-button>
-                                <ion-icon name="link"></ion-icon>
-                            </ion-fab-button>
-                        </ion-fab-list>
-                    </ion-fab>
-                </ion-item>
+    <!--<ion-card class="welcome-card">-->
+        <!--&lt;!&ndash;<ion-img src="/assets/shapes.svg"></ion-img>&ndash;&gt;-->
+        <!--<ion-card-header color="primary">-->
+            <!--<ion-card-title>-->
+                <!--<ion-icon name="mail"></ion-icon>-->
+                <!--Nice job on the quiz!-->
+            <!--</ion-card-title>-->
+            <!--<ion-card-subtitle>[date]</ion-card-subtitle>-->
+        <!--</ion-card-header>-->
+        <!--<ion-card-content>-->
+            <!--<p>Here is some text from a message sent to you by xxxx...</p>-->
+        <!--</ion-card-content>-->
+    <!--</ion-card>-->
+    <!--<ion-card>-->
+        <!--<ion-img class="card-image" src="/assets/images/backgrounds/class/bridge.jpg"></ion-img>-->
+        <!--<ion-card-header>-->
+            <!--<ion-card-title>Hello World</ion-card-title>-->
+        <!--</ion-card-header>-->
+        <!--<ion-card-content>-->
+            <!--<p>The content for this card</p>-->
+        <!--</ion-card-content>-->
 
+        <!--<ion-grid>-->
+            <!--<ion-row>-->
+                <!--<ion-col>-->
+                    <!--<div>-->
+                        <!--<ion-button size="small">-->
+                            <!--<ion-icon name="thumbs-up"></ion-icon>-->
+                            <!--12 Likes-->
+                        <!--</ion-button>-->
+                    <!--</div>-->
+                <!--</ion-col>-->
+                <!--<ion-col>-->
+                    <!--<div>-->
+                        <!--<ion-button size="small">-->
+                            <!--<ion-icon name="text"></ion-icon>-->
+                            <!--4 Comments-->
+                        <!--</ion-button>-->
+                    <!--</div>-->
+                <!--</ion-col>-->
+                <!--<ion-col>-->
+                    <!--<div>-->
+                        <!--11h ago-->
+                    <!--</div>-->
+                <!--</ion-col>-->
+            <!--</ion-row>-->
+        <!--</ion-grid>-->
 
-            </ion-list>
-        </ion-card-content>
-    </ion-card>
-
-    <ion-card class="welcome-card">
-        <!--<ion-img src="/assets/shapes.svg"></ion-img>-->
-        <ion-card-header color="primary">
-            <ion-card-title>
-                <ion-icon name="mail"></ion-icon>
-                Nice job on the quiz!
-            </ion-card-title>
-            <ion-card-subtitle>[date]</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-            <p>Here is some text from a message sent to you by xxxx...</p>
-        </ion-card-content>
-    </ion-card>
-    <ion-card>
-        <ion-img class="card-image" src="/assets/images/backgrounds/class/bridge.jpg"></ion-img>
-        <ion-card-header>
-            <ion-card-title>Hello World</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <p>The content for this card</p>
-        </ion-card-content>
-
-        <ion-grid>
-            <ion-row>
-                <ion-col>
-                    <div>
-                        <ion-button size="small">
-                            <ion-icon name="thumbs-up"></ion-icon>
-                            12 Likes
-                        </ion-button>
-                    </div>
-                </ion-col>
-                <ion-col>
-                    <div>
-                        <ion-button size="small">
-                            <ion-icon name="text"></ion-icon>
-                            4 Comments
-                        </ion-button>
-                    </div>
-                </ion-col>
-                <ion-col>
-                    <div>
-                        11h ago
-                    </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-
-    </ion-card>
+    <!--</ion-card>-->
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="light">

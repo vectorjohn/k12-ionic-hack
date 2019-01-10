@@ -1,0 +1,92 @@
+<ion-card>
+  <ion-card-header color="{{type}}">
+    <ion-card-title>
+        <ion-icon name="close" class="pull-right" (click)="closeMe()"></ion-icon>
+
+      <ion-icon name="{{icon}}"></ion-icon>
+      {{title}}
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+
+    <ion-list>
+      <ng-template *ngFor="let i of items">
+        <ion-item color="{{i.status}}" [ngIf]="showItem(i.id)">
+          <ion-avatar slot="start">
+            <img src="{{i.img}}"/>
+          </ion-avatar>
+          <ion-label>
+            <h2>{{i.name}}</h2>
+            <h3>{{i.description}}</h3>
+            <p>{{i.time}}</p>
+          </ion-label>
+          <ion-icon name="link" class="pull-right" (click)="i.launch"></ion-icon>
+          <ion-fab vertical="top" horizontal="end">
+            <ion-fab-button size="small">
+              <ion-icon name="more"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="start">
+              <ion-fab-button>
+                <ion-icon name="close" (click)="removeItem(i.id)"></ion-icon>
+              </ion-fab-button>
+              <ion-fab-button>
+                <ion-icon name="link"></ion-icon>
+              </ion-fab-button>
+            </ion-fab-list>
+          </ion-fab>
+        </ion-item>
+      </ng-template>
+
+
+      <ion-item color="warning">
+        <ion-avatar slot="start">
+          <img src="/assets/images/backgrounds/class/cheetah.jpg"/>
+        </ion-avatar>
+        <ion-label>
+          <h2>Polynomials</h2>
+          <h3>Algebra XXI</h3>
+          <p>Summary of it here</p>
+        </ion-label>
+        <ion-fab vertical="top" horizontal="end">
+          <ion-fab-button size="small">
+            <ion-icon name="more"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-list side="start">
+            <ion-fab-button>
+              <ion-icon name="cloud-download"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button>
+              <ion-icon name="link"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="/assets/images/avatars/user-1.png"/>
+        </ion-avatar>
+        <ion-label>
+          <h2>Nice job on the quiz!</h2>
+          <h3>Mr. Teacher - 4d ago</h3>
+          <p>Lorem ipsum!</p>
+        </ion-label>
+        <ion-fab vertical="top" horizontal="end">
+          <ion-fab-button size="small">
+            <ion-icon name="more"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-list side="start">
+            <ion-fab-button>
+              <ion-icon name="close"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button>
+              <ion-icon name="link"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+      </ion-item>
+
+
+    </ion-list>
+  </ion-card-content>
+</ion-card>

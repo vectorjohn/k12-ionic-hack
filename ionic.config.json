@@ -1,5 +1,7 @@
 {
   "name": "team-west-ionic-hack",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
