@@ -15,14 +15,14 @@
       <ion-col size="9" *ngIf="message.from !== nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
         <span class="user_name">{{ message.from }}:</span><br>
         <span>{{ message.text }}</span>
-        <div class="time">{{getDate() | date:'hh:MM'}}</div>
+        <div class="time">{{message.created | date:'h:mm'}}</div>
 
       </ion-col>
 
       <ion-col offset="3" size="9" *ngIf="message.from === nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
         <span class="user_name">{{ message.from }}:</span><br>
         <span>{{ message.text }}</span>
-        <div class="time">{{getDate() | date:'hh:MM'}}</div>
+        <div class="time">{{message.created | date:'h:mm'}}</div>
       </ion-col>
 
     </ion-row>
