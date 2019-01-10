@@ -11,7 +11,7 @@ import {Observable} from 'rxjs/index';
 })
 export class ChatRoomPage implements OnInit {
 
-    nickname: 'test name';
+    nickname= 'test name';
     messages = [];
     message = '';
 
@@ -33,6 +33,10 @@ export class ChatRoomPage implements OnInit {
     }
 
     ngOnInit() {
+
+    }
+
+    ionViewDidEnter() {
         this.joinChat();
     }
 
