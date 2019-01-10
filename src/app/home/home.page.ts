@@ -25,20 +25,28 @@ export class HomePage {
 
     hideOverdue(hide) {
         this.showOverdue = !hide;
-        if (hide) {this.presentToast();}
+        if (hide) {
+            this.presentToast();
+        }
     }
 
     hideUpcoming(hide) {
         this.showUpcoming = !hide;
+        if (hide) {
+            this.presentToast();
+        }
     }
 
     hideMessages(hide) {
         this.showMessages = !hide;
+        if (hide) {
+            this.presentToast();
+        }
     }
 
     async presentToast() {
         const toast = await this.toastController.create({
-            message: 'Your settings have been saved.',
+            message: 'This item is temporarily hidden.',
             duration: 2000
         });
         toast.present();

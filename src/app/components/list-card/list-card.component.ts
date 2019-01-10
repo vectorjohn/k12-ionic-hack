@@ -21,7 +21,7 @@ export class ListCardComponent {
         this.hide.emit(true);
     }
 
-    public removeItem(id: number) {
+    public removeItem(id: string) {
         this.items = this.items.filter(i => i.id !== id);
         if (this.items.length === 0) {
             this.closeMe();

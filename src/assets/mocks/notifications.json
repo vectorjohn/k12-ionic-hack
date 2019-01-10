@@ -7,7 +7,7 @@
       "time": "due 3h ago|timestamp",
       "description": "blah blah blah blah.",
       "type": "a|b|c",
-      "status": "success|warning|danger",
+      "status": "warning",
       "img": "/assets/images/backgrounds/class/road.jpg",
       "icon": "iconName",
       "launch": "/some/path?id=123"
@@ -15,7 +15,31 @@
   ],
   "upcoming": [
     {
-      "id": 234,
+      "id": 1,
+      "name": "something is overdue",
+      "summary": "Class Name",
+      "time": "due 3h ago|timestamp",
+      "description": "blah blah blah blah.",
+      "type": "a|b|c",
+      "status": "success|warning|danger",
+      "img": "/assets/images/backgrounds/class/road.jpg",
+      "icon": "iconName",
+      "launch": "/some/path?id=123"
+    },
+    {
+      "id": 3,
+      "name": "something is overdue",
+      "summary": "Class Name",
+      "time": "due 3h ago|timestamp",
+      "description": "blah blah blah blah.",
+      "type": "a|b|c",
+      "status": "success|warning|danger",
+      "img": "/assets/images/backgrounds/class/road.jpg",
+      "icon": "iconName",
+      "launch": "/some/path?id=123"
+    },
+    {
+      "id": 4,
       "name": "something is overdue",
       "summary": "Class Name",
       "time": "due 3h ago|timestamp",

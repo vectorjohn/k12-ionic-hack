@@ -20,56 +20,6 @@
     <!--Messages-->
     <app-list-card [title]="'Messages'" [type]="'primary'" [icon]="'mail-unread'" *ngIf="showMessages" [items]="(notifications$|async)?.messages" (hide)="hideMessages($event)"></app-list-card>
 
-    <!--<ion-card class="welcome-card">-->
-        <!--&lt;!&ndash;<ion-img src="/assets/shapes.svg"></ion-img>&ndash;&gt;-->
-        <!--<ion-card-header color="primary">-->
-            <!--<ion-card-title>-->
-                <!--<ion-icon name="mail"></ion-icon>-->
-                <!--Nice job on the quiz!-->
-            <!--</ion-card-title>-->
-            <!--<ion-card-subtitle>[date]</ion-card-subtitle>-->
-        <!--</ion-card-header>-->
-        <!--<ion-card-content>-->
-            <!--<p>Here is some text from a message sent to you by xxxx...</p>-->
-        <!--</ion-card-content>-->
-    <!--</ion-card>-->
-    <!--<ion-card>-->
-        <!--<ion-img class="card-image" src="/assets/images/backgrounds/class/bridge.jpg"></ion-img>-->
-        <!--<ion-card-header>-->
-            <!--<ion-card-title>Hello World</ion-card-title>-->
-        <!--</ion-card-header>-->
-        <!--<ion-card-content>-->
-            <!--<p>The content for this card</p>-->
-        <!--</ion-card-content>-->
-
-        <!--<ion-grid>-->
-            <!--<ion-row>-->
-                <!--<ion-col>-->
-                    <!--<div>-->
-                        <!--<ion-button size="small">-->
-                            <!--<ion-icon name="thumbs-up"></ion-icon>-->
-                            <!--12 Likes-->
-                        <!--</ion-button>-->
-                    <!--</div>-->
-                <!--</ion-col>-->
-                <!--<ion-col>-->
-                    <!--<div>-->
-                        <!--<ion-button size="small">-->
-                            <!--<ion-icon name="text"></ion-icon>-->
-                            <!--4 Comments-->
-                        <!--</ion-button>-->
-                    <!--</div>-->
-                <!--</ion-col>-->
-                <!--<ion-col>-->
-                    <!--<div>-->
-                        <!--11h ago-->
-                    <!--</div>-->
-                <!--</ion-col>-->
-            <!--</ion-row>-->
-        <!--</ion-grid>-->
-
-    <!--</ion-card>-->
-
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="light">
             <ion-icon name="add"></ion-icon>
