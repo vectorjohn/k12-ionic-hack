@@ -14,7 +14,7 @@
     <!-- Overdue -->
     <app-list-card [title]="'Overdue'" [type]="'warning'" [icon]="'warning'" *ngIf="showOverdue" [items]="overdueItems" (hide)="hideOverdue($event)"></app-list-card>
 
-    <!-- Messages -->
+    <!-- Upcoming -->
     <app-list-card [title]="'Upcoming'" [type]="'primary'" [icon]="'book'" *ngIf="showMessages" [items]="overdueItems" (hide)="hideMessages($event)"></app-list-card>
 
     <!--<ion-card class="welcome-card">-->
