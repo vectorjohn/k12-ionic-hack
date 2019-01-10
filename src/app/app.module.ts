@@ -10,6 +10,7 @@ import {Network} from '@ionic-native/network/ngx';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ServiceWorkerModule} from '@angular/service-worker';
+import {IonicStorageModule} from '@ionic/storage';
 import {environment} from '../environments/environment';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -18,6 +19,7 @@ import {HttpClientModule} from '@angular/common/http';
     entryComponents: [],
     imports: [
         BrowserModule,
+        IonicStorageModule.forRoot(),
         IonicModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
