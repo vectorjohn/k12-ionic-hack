@@ -16,7 +16,7 @@ export abstract class BaseService<T, R> {
             if (!this.loaded) {
                 this.loadData();
             }
-        })).subscribe(this.cachedData);
+        })).subscribe();
         return this.cachedData.asObservable();
     }
 
