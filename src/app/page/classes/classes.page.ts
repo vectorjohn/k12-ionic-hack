@@ -9,7 +9,7 @@ import {StudentClass} from '../../models/student-class';
 })
 export class ClassesPage implements OnInit {
 
-    classes: [StudentClass];
+    classes: StudentClass[];
 
     constructor(private classesService: ClassesService) {
     }
@@ -18,7 +18,7 @@ export class ClassesPage implements OnInit {
     }
 
     ionViewDidEnter() {
-        this.classesService.getClasses().subscribe((classes) => {
+        this.classesService.getClasses().subscribe((classes: StudentClass[]) => {
             this.classes = classes;
         });
     }

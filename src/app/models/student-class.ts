@@ -8,5 +8,5 @@ export interface StudentClass {
 }
 
 export interface StudentClassResponse {
-    classes: [StudentClass];
+    classes: StudentClass[];
 }

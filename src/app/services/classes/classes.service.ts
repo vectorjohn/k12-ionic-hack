@@ -8,17 +8,17 @@ import {NetworkService} from '../network/network.service';
 @Injectable({
     providedIn: 'root'
 })
-export class ClassesService extends BaseService<[StudentClass], StudentClassResponse> {
+export class ClassesService extends BaseService<StudentClass[], StudentClassResponse> {
 
-    constructor(private http: HttpClient, private networkService: NetworkService) {
+    constructor(protected http: HttpClient, protected networkService: NetworkService) {
         super(http, networkService, '/assets/mocks/classes.json');
     }
 
-    getClasses(): Observable<[StudentClass]> {
+    getClasses(): Observable<StudentClass[]> {
         return super.getData();
     }
 
-    protected transform(response: StudentClassResponse): [StudentClass] {
+    protected transform(response: StudentClassResponse): StudentClass[] {
         return response.classes;
     }
 }

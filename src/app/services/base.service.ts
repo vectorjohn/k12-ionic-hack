@@ -12,7 +12,7 @@ export abstract class BaseService<T, R> {
     private loaded = false;
     private cachedData: BehaviorSubject<T> = new BehaviorSubject<T>(null);
 
-    constructor(private http: HttpClient, private networkService: NetworkService, private jsonPath: string) {
+    constructor(protected http: HttpClient, protected networkService: NetworkService, private jsonPath: string) {
     }
 
     public getData(): Observable<T> {
@@ -20,8 +20,8 @@ export abstract class BaseService<T, R> {
             if (!this.loaded && online) {
                 this.loadData();
             }
-        }));
-        return this.cachedData;
+        })).subscribe();
+        return this.cachedData.asObservable();
     }
 
     private loadData(): void {
