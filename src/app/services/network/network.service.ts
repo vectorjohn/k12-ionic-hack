@@ -1,5 +1,4 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {Network} from '@ionic-native/network/ngx';
 import {BehaviorSubject, Observable, Subject} from 'rxjs/index';
 
 @Injectable({
@@ -9,7 +8,7 @@ export class NetworkService implements OnDestroy {
 
     private online: Subject<boolean>;
 
-    constructor(private network: Network) {
+    constructor() {
         this.onOffline = this.onOffline.bind(this);
         this.onOnline = this.onOnline.bind(this);
 
