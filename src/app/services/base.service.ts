@@ -12,7 +12,7 @@ export abstract class BaseService<T, R> {
     }
 
     public getData(): Observable<T> {
-        this.networkService.isOnline().pipe(filter(online => online), take(1), map(online => {
+        this.networkService.isOnline().pipe(filter(online => online), map(online => {
             if (!this.loaded) {
                 this.loadData();
             }
