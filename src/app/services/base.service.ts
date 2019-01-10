@@ -1,13 +1,9 @@
-import {Injectable} from '@angular/core';
 import {NetworkService} from './network/network.service';
 import {BehaviorSubject, Observable} from 'rxjs/index';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {take} from 'rxjs/internal/operators';
+import {filter, take} from 'rxjs/internal/operators';
 
-@Injectable({
-    providedIn: 'root'
-})
 export abstract class BaseService<T, R> {
     private loaded = false;
     private cachedData: BehaviorSubject<T> = new BehaviorSubject<T>(null);
@@ -16,11 +12,11 @@ export abstract class BaseService<T, R> {
     }
 
     public getData(): Observable<T> {
-        this.networkService.isOnline().pipe(take(1), map(online => {
-            if (!this.loaded && online) {
+        this.networkService.isOnline().pipe(filter(online => online), take(1), map(online => {
+            if (!this.loaded) {
                 this.loadData();
             }
-        })).subscribe();
+        })).subscribe(this.cachedData);
         return this.cachedData.asObservable();
     }
 

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ClassesService} from '../../services/classes/classes.service';
 import {StudentClass} from '../../models/student-class';
+import {Observable} from 'rxjs/index';
 
 @Component({
     selector: 'app-classes',
@@ -9,7 +10,7 @@ import {StudentClass} from '../../models/student-class';
 })
 export class ClassesPage implements OnInit {
 
-    classes: StudentClass[];
+    classes$: Observable<StudentClass[]>;
 
     constructor(private classesService: ClassesService) {
     }
@@ -18,9 +19,10 @@ export class ClassesPage implements OnInit {
     }
 
     ionViewDidEnter() {
-        this.classesService.getClasses().subscribe((classes: StudentClass[]) => {
+        this.classes$ = this.classesService.getClasses();
+        /*this.classesService.getClasses().subscribe((classes: StudentClass[]) => {
             this.classes = classes;
-        });
+        });*/
     }
 
 }

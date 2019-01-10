@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Network} from '@ionic-native/network/ngx';
-import {BehaviorSubject, Observable} from 'rxjs/index';
+import {Observable, Subject} from 'rxjs/index';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NetworkService {
 
-    private online: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    private online: Subject<boolean> = new Subject();
 
     constructor(private network: Network) {
         this.network.onConnect().subscribe(value => {
