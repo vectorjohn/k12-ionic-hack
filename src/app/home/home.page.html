@@ -18,7 +18,7 @@
     <app-list-card [title]="'Upcoming'" [type]="'primary'" [icon]="'book'" *ngIf="showUpcoming" [items]="(notifications$|async)?.upcoming" (hide)="hideUpcoming($event)"></app-list-card>
 
     <!--Messages-->
-    <app-list-card [title]="'Messages'" [type]="'primary'" [icon]="'mail'" *ngIf="showMessages" [items]="(notifications$|async)?.messages" (hide)="hideMessages($event)"></app-list-card>
+    <app-list-card [title]="'Messages'" [type]="'primary'" [icon]="'mail-unread'" *ngIf="showMessages" [items]="(notifications$|async)?.messages" (hide)="hideMessages($event)"></app-list-card>
 
     <!--<ion-card class="welcome-card">-->
         <!--&lt;!&ndash;<ion-img src="/assets/shapes.svg"></ion-img>&ndash;&gt;-->
@@ -76,7 +76,10 @@
         </ion-fab-button>
         <ion-fab-list side="start">
             <ion-fab-button>
-                <ion-icon name="logo-vimeo"></ion-icon>
+                <ion-icon name="mail"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button>
+                <ion-icon name="person"></ion-icon>
             </ion-fab-button>
         </ion-fab-list>
     </ion-fab>
