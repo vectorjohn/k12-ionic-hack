@@ -1,0 +1,8 @@
+.top-container {
+  max-height: 125px;
+  overflow-y: hidden;
+
+  ion-img, img {
+    width: 100%;
+  }
+}

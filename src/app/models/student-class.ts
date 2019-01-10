@@ -5,6 +5,7 @@ export interface StudentClass {
     discipline: string;
     grade: string;
     percentage: number;
+    image: string;
 }
 
 export interface StudentClassResponse {

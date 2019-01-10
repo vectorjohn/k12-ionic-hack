@@ -12,7 +12,13 @@
 <ion-content padding>
     <ion-list>
         <ion-item *ngFor="let klass of classes">
-            <app-course-card [name]="klass.name"></app-course-card>
+            <app-course-card
+                    [name]="klass.name"
+                    [description]="klass.description"
+                    [discipline]="klass.discipline"
+                    [grade]="klass.grade"
+                    [image]="klass.image"
+                    [percentage]="klass.percentage"></app-course-card>
         </ion-item>
     </ion-list>
 </ion-content>

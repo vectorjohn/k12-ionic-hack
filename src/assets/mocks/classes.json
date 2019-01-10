@@ -1,12 +1,29 @@
 {
   "classes": [
     {
+      "id": 84323,
+      "name": "3D Modeling XVII",
+      "description": "Learn even more about 3D modeling than the last 15 courses",
+      "discipline": "SCI",
+      "grade": "C",
+      "percentage": 75,
+      "image": "/assets/images/backgrounds/class/ladybug.jpg",
+      "assignments": [
+        {
+          "id": 123,
+          "name": "Baking soda and vinegar volcanos",
+          "launch": "/something/foo/123"
+        }
+      ]
+    },
+    {
       "id": 1,
       "name": "Math 0",
       "description": "A serious class for serious people",
       "discipline": "MATH",
       "grade": "A",
       "percentage": 92,
+      "image": "/assets/images/backgrounds/class/road.jpg",
       "assignments": [
         {
           "id": 123,
@@ -32,6 +49,7 @@
       "discipline": "MATH",
       "grade": "A-",
       "percentage": 90,
+      "image": "/assets/images/backgrounds/class/fish.jpg",
       "assignments": [
         {
           "id": 123,
@@ -47,6 +65,7 @@
       "discipline": "SCI",
       "grade": "A",
       "percentage": 95,
+      "image": "/assets/images/backgrounds/class/turtle.jpg",
       "assignments": [
         {
           "id": 123,
