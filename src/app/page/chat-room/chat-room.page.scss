@@ -7,9 +7,17 @@
   border-radius: 10px !important;
   margin-bottom: 4px !important;
 }
+.time {
+  color: #afafaf;
+  float: right;
+  font-size: small;
+}
 .my_message {
-  background: var(–ion-color-primary) !important;
+  background: var(--ion-color-primary);
   color: #000 !important;
+  .time, .user_name {
+    color: white;
+  }
 }
 .other_message {
   background: #dcdcdc !important;

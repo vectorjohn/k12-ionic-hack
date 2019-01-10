@@ -79,6 +79,10 @@ export class ChatRoomPage implements OnInit {
         this.socket.disconnect();
     }
 
+    getDate(): Date {
+        return new Date();
+    }
+
     async showToast(msg) {
         const toast = await this.toast.create({
             message: msg,
