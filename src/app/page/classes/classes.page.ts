@@ -10,7 +10,7 @@ import {Observable} from 'rxjs/index';
 })
 export class ClassesPage implements OnInit {
 
-    classes$: Observable<StudentClass[]>;
+    classes: StudentClass[];
 
     constructor(private classesService: ClassesService) {
     }
@@ -19,10 +19,9 @@ export class ClassesPage implements OnInit {
     }
 
     ionViewDidEnter() {
-        this.classes$ = this.classesService.getClasses();
-        /*this.classesService.getClasses().subscribe((classes: StudentClass[]) => {
+        this.classesService.getClasses().subscribe((classes: StudentClass[]) => {
             this.classes = classes;
-        });*/
+        });
     }
 
 }

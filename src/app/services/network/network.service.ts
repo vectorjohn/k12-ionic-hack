@@ -1,24 +1,37 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Network} from '@ionic-native/network/ngx';
-import {Observable, Subject} from 'rxjs/index';
+import {BehaviorSubject, Observable, Subject} from 'rxjs/index';
 
 @Injectable({
     providedIn: 'root'
 })
-export class NetworkService {
+export class NetworkService implements OnDestroy {
 
-    private online: Subject<boolean> = new Subject();
+    private online: Subject<boolean>;
 
     constructor(private network: Network) {
-        this.network.onConnect().subscribe(value => {
-            this.online.next(true);
-        });
-        this.network.onDisconnect().subscribe(value => {
-            this.online.next(false);
-        });
+        this.onOffline = this.onOffline.bind(this);
+        this.onOnline = this.onOnline.bind(this);
+
+        this.online = new BehaviorSubject(navigator.onLine);
+        addEventListener('online', this.onOnline);
+        addEventListener('offline', this.onOffline);
+    }
+
+    ngOnDestroy() {
+        removeEventListener('online', this.onOnline);
+        removeEventListener('offline', this.onOffline);
     }
 
     public isOnline(): Observable<boolean> {
         return this.online;
+    }
+
+    private onOffline() {
+        this.online.next(false);
+    }
+
+    private onOnline() {
+        this.online.next(true);
     }
 }

@@ -6,7 +6,7 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-item *ngFor="let klass of classes$ | async">
+        <ion-item *ngFor="let klass of classes">
             <app-course-card [name]="klass.name"></app-course-card>
         </ion-item>
     </ion-list>
