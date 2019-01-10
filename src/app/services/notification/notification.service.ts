@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
 import {BaseService} from '../base.service';
-import {NotificationItem} from '../../models/notification-item';
+import {NotificationItem, NotificationResponse, Notifications} from '../../models/notification-item';
 import {HttpClient} from '@angular/common/http';
 import {NetworkService} from '../network/network.service';
 import {Storage} from '@ionic/storage';
+import {Observable} from 'rxjs/index';
 
 @Injectable({
     providedIn: 'root'
 })
-export class NotificationService extends BaseService<NotificationItem, NotificationItem> {
+export class NotificationService extends BaseService<Notifications, NotificationResponse> {
 
     constructor(protected http: HttpClient,
                 protected networkService: NetworkService,
@@ -16,7 +17,16 @@ export class NotificationService extends BaseService<NotificationItem, Notificat
         super(http, networkService, storage, '/assets/mocks/notifications.json');
     }
 
-    protected transform(response: NotificationItem): NotificationItem {
-        return response;
+    public getNotifications(): Observable<Notifications> {
+        return super.getData();
+    }
+
+    protected transform(response: NotificationResponse): Notifications {
+        const n = new Notifications();
+        n.overdue = response.overdue;
+        n.upcoming = response.upcoming;
+        n.messages = response.messages;
+        console.log(n);
+        return n;
     }
 }

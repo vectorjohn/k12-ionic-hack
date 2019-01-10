@@ -1,14 +1,3 @@
-// "id": 234,
-//     "name": "something is overdue",
-//     "summary": "Class Name",
-//     "time": "due 3h ago|timestamp",
-//     "description": "blah blah blah blah.",
-//     "type": "a|b|c",
-//     "status": "success|warning|danger",
-//     "img": "/assets/images/backgrounds/class/road/jpg",
-//     "icon": "iconName",
-//     "launch": "/some/path?id=123"
-
 export interface NotificationItem {
     id: string;
     name: string;
@@ -20,4 +9,17 @@ export interface NotificationItem {
     img: string;
     icon: string;
     launch: string;
+}
+
+export class Notifications {
+    overdue: NotificationItem[];
+    upcoming: NotificationItem[];
+    messages: NotificationItem[];
+}
+
+
+export interface NotificationResponse {
+    overdue: NotificationItem[];
+    upcoming: NotificationItem[];
+    messages: NotificationItem[];
 }

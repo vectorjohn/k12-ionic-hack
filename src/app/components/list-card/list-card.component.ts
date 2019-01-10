@@ -24,10 +24,12 @@ export class ListCardComponent {
     }
 
     public removeItem(id: number) {
+        console.log(id);
         this.hiddenItems.push(id);
     }
 
     public showItem(itemId: number): boolean {
-        return this.hiddenItems.findIndex(hidden => hidden === itemId) > 0;
+        console.log(this.hiddenItems);
+        return this.hiddenItems.findIndex(hidden => hidden === itemId) !== -1;
     }
 }

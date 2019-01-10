@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {NotificationItem} from '../models/notification-item';
+import {Notifications} from '../models/notification-item';
+import {NotificationService} from '../services/notification/notification.service';
+import {Observable} from 'rxjs/index';
 
 @Component({
     selector: 'app-home',
@@ -8,17 +10,27 @@ import {NotificationItem} from '../models/notification-item';
 })
 export class HomePage {
 
-    overdueItems: NotificationItem[];
+    notifications$: Observable<Notifications>;
     showOverdue = true;
+    showUpcoming = true;
     showMessages = true;
 
-    constructor() {
-        this.overdueItems = new Array < NotificationItem >();
+    constructor(private notificationService: NotificationService) {
+    }
+
+    ionViewDidEnter() {
+        console.log('view did enter');
+        this.notifications$ = this.notificationService.getNotifications();
     }
 
     hideOverdue(hide) {
         this.showOverdue = !hide;
     }
+
+    hideUpcoming(hide) {
+        this.showUpcoming = !hide;
+    }
+
     hideMessages(hide) {
         this.showMessages = !hide;
     }
