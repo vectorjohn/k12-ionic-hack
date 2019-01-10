@@ -1,10 +1,14 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>classes</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>classes</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  this is the content of classes page
-  <app-course-card></app-course-card>
+    this is the content of classes page
+    <ion-list>
+        <ion-item *ngFor="let klass of classes">
+            <app-course-card [name]="klass.name"></app-course-card>
+        </ion-item>
+    </ion-list>
 </ion-content>

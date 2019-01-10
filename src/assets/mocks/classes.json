@@ -1,0 +1,59 @@
+{
+  "classes": [
+    {
+      "id": 1,
+      "name": "Math 0",
+      "description": "A serious class for serious people",
+      "discipline": "MATH",
+      "grade": "A",
+      "percentage": 92,
+      "assignments": [
+        {
+          "id": 123,
+          "name": "Plussing",
+          "launch": "/something/foo/123"
+        },
+        {
+          "id": 1230,
+          "name": "Plussing multiple times",
+          "launch": "/something/foo/1230"
+        },
+        {
+          "id": 12,
+          "name": "Detracting",
+          "launch": "/something/foo/12"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "English DX",
+      "description": "Real English",
+      "discipline": "MATH",
+      "grade": "A-",
+      "percentage": 90,
+      "assignments": [
+        {
+          "id": 123,
+          "name": "Words and they're meanings",
+          "launch": "/something/foo2/123"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Science",
+      "description": "Something science",
+      "discipline": "SCI",
+      "grade": "A",
+      "percentage": 95,
+      "assignments": [
+        {
+          "id": 123,
+          "name": "Baking soda and vinegar volcanos",
+          "launch": "/something/foo/123"
+        }
+      ]
+    }
+  ]
+}
