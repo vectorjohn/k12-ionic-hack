@@ -2,10 +2,10 @@
   "notifications": [
     {
       "id": 234,
-      "title": "something is overdue",
-      "subtitle": "Class Name",
+      "name": "something is overdue",
+      "summary": "Class Name",
       "time": "due 3h ago|timestamp",
-      "summary": "blah blah blah blah.",
+      "description": "blah blah blah blah.",
       "type": "a|b|c",
       "status": "success|warning|danger",
       "img": "/assets/images/backgrounds/class/road/jpg",
@@ -16,10 +16,10 @@
   "messages": [
     {
       "id": 1234,
-      "title": "Nice job on the quiz!",
-      "subtitle": "from Mr. Teacher",
+      "name": "Nice job on the quiz!",
+      "summary": "from Mr. Teacher",
       "time": "due 3h ago|timestamp",
-      "summary": "blah blah blah blah.",
+      "description": "blah blah blah blah.",
       "type": "a|b|c",
       "status": "success|warning|danger",
       "img": "/assets/images/avatars/user-1.png",
