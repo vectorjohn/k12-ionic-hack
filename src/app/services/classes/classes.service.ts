@@ -1,19 +1,24 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
 import {StudentClass, StudentClassResponse} from '../../models/student-class';
 import {Observable} from 'rxjs/index';
+import {BaseService} from '../base.service';
+import {NetworkService} from '../network/network.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ClassesService {
+export class ClassesService extends BaseService<[StudentClass], StudentClassResponse> {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private networkService: NetworkService) {
+        super(http, networkService, '/assets/mocks/classes.json');
     }
 
     getClasses(): Observable<[StudentClass]> {
-        return this.http.get('/assets/mocks/classes.json', )
-            .pipe(map((resp: StudentClassResponse) => resp.classes));
+        return super.getData();
+    }
+
+    protected transform(response: StudentClassResponse): [StudentClass] {
+        return response.classes;
     }
 }
