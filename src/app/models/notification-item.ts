@@ -6,7 +6,7 @@ export interface NotificationItem {
     description: string;
     type: string;
     status: string;
-    img: string;
+    img?: string;
     icon: string;
     launch: string;
 }

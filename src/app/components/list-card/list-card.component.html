@@ -1,9 +1,9 @@
 <ion-card>
-  <ion-card-header color="{{type}}">
+  <ion-card-header color="light">
     <ion-card-title>
         <ion-icon name="close" class="pull-right" (click)="closeMe()"></ion-icon>
 
-      <ion-icon name="{{icon}}"></ion-icon>
+      <ion-icon name="{{icon}}" color="{{type}}"></ion-icon>
       {{title}}
     </ion-card-title>
   </ion-card-header>
@@ -11,9 +11,9 @@
 
     <ion-list>
       <ng-template ngFor let-i [ngForOf]="items">
-        <ion-item color="{{i.status}}" >
+        <ion-item color="{{i.status}}">
           <ion-avatar slot="start">
-            <img src="{{i.img}}"/>
+            <img src="{{i.img?i.img:'http://placekitten.com/150/151'}}"/>
           </ion-avatar>
           <ion-label>
             <h2>{{i.name}}</h2>
@@ -22,7 +22,7 @@
           </ion-label>
           <!--<ion-icon name="link" class="pull-right" (click)="i.launch"></ion-icon>-->
           <ion-fab vertical="top" horizontal="end">
-            <ion-fab-button size="small">
+            <ion-fab-button size="small" color="light">
               <ion-icon name="more"></ion-icon>
             </ion-fab-button>
             <ion-fab-list side="start">

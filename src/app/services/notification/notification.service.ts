@@ -26,7 +26,6 @@ export class NotificationService extends BaseService<Notifications, Notification
         n.overdue = response.overdue;
         n.upcoming = response.upcoming;
         n.messages = response.messages;
-        console.log(n);
         return n;
     }
 }

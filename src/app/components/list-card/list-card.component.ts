@@ -14,8 +14,6 @@ export class ListCardComponent {
     @Input() icon = 'mail';
     @Output() hide = new EventEmitter<boolean>();
 
-    public hiddenItems = [];
-
     constructor() {
     }
 
@@ -24,12 +22,10 @@ export class ListCardComponent {
     }
 
     public removeItem(id: number) {
-        console.log(id);
-        this.hiddenItems.push(id);
+        this.items = this.items.filter(i => i.id !== id);
+        if (this.items.length === 0) {
+            this.closeMe();
+        }
     }
 
-    public showItem(itemId: number): boolean {
-        console.log(this.hiddenItems);
-        return this.hiddenItems.findIndex(hidden => hidden === itemId) !== -1;
-    }
 }

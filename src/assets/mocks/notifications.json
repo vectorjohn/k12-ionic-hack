@@ -36,7 +36,6 @@
       "description": "blah blah blah blah.",
       "type": "a|b|c",
       "status": "success|warning|danger",
-      "img": "/assets/images/avatars/user-1.png",
       "icon": "iconName",
       "launch": "/some/path?id=123"
     }

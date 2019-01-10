@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import {Notifications} from '../models/notification-item';
 import {NotificationService} from '../services/notification/notification.service';
 import {Observable} from 'rxjs/index';
@@ -15,16 +16,16 @@ export class HomePage {
     showUpcoming = true;
     showMessages = true;
 
-    constructor(private notificationService: NotificationService) {
+    constructor(private notificationService: NotificationService,public toastController: ToastController) {
     }
 
     ionViewDidEnter() {
-        console.log('view did enter');
         this.notifications$ = this.notificationService.getNotifications();
     }
 
     hideOverdue(hide) {
         this.showOverdue = !hide;
+        if (hide) {this.presentToast();}
     }
 
     hideUpcoming(hide) {
@@ -33,5 +34,13 @@ export class HomePage {
 
     hideMessages(hide) {
         this.showMessages = !hide;
+    }
+
+    async presentToast() {
+        const toast = await this.toastController.create({
+            message: 'Your settings have been saved.',
+            duration: 2000
+        });
+        toast.present();
     }
 }
