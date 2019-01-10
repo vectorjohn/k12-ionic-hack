@@ -17,8 +17,8 @@
           </ion-avatar>
           <ion-label>
             <h2>{{i.name}}</h2>
-            <h3>{{i.time}} | {{i.summary}}</h3>
-            <p>{{i.description}}</p>
+            <h3>{{i.description}}</h3>
+            <p><ion-icon *ngIf="i.time" name="timer"></ion-icon>{{i.time}}</p>
           </ion-label>
           <ion-fab vertical="top" horizontal="end">
             <ion-fab-button size="small" color="light">

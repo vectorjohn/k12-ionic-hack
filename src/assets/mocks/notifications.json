@@ -2,30 +2,28 @@
   "overdue": [
     {
       "id": 234,
-      "name": "something is overdue",
-      "summary": "Class Name",
-      "time": "due 3h ago|timestamp",
-      "description": "blah blah blah blah.",
-      "type": "a|b|c",
-      "status": "warning",
+      "name": "Course: SCI06 DEMO SC Science 6",
+      "time": "Due 3h ago",
+      "description": "Assignment: 1.03 Quiz: Expressions",
+      "type": "overview",
+      "status": "success|warning|danger",
+      "img": "/assets/images/backgrounds/class/cheetah.jpg",
+      "icon": "iconName",
+      "launch": "/some/path?id=123"
+    },
+    {
+      "id": 234,
+      "name": "Course: American History A",
+      "time": "Due 1h ago",
+      "description": "Assignment: History and A History of US",
+      "type": "overview",
+      "status": "success|warning|danger",
       "img": "/assets/images/backgrounds/class/road.jpg",
       "icon": "iconName",
       "launch": "/some/path?id=123"
     }
   ],
   "upcoming": [
-    {
-      "id": 1,
-      "name": "something is overdue",
-      "summary": "Class Name",
-      "time": "due 3h ago|timestamp",
-      "description": "blah blah blah blah.",
-      "type": "a|b|c",
-      "status": "success|warning|danger",
-      "img": "/assets/images/backgrounds/class/road.jpg",
-      "icon": "iconName",
-      "launch": "/some/path?id=123"
-    },
     {
       "id": 3,
       "name": "something is overdue",
