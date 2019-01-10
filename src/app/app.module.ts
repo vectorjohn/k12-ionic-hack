@@ -12,14 +12,19 @@ import {ServiceWorkerModule} from '@angular/service-worker';
 import {IonicStorageModule} from '@ionic/storage';
 import {environment} from '../environments/environment';
 import {HttpClientModule} from '@angular/common/http';
+import { NicknameModalComponent } from './components/nickname-modal/nickname-modal.component';
+
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+const config: SocketIoConfig = { url: 'http://boatfights.com:3001', options: {} };
 
 @NgModule({
-    declarations: [AppComponent],
-    entryComponents: [],
+    declarations: [AppComponent, NicknameModalComponent],
+    entryComponents: [NicknameModalComponent],
     imports: [
         BrowserModule,
         IonicStorageModule.forRoot(),
         IonicModule.forRoot(),
+        SocketIoModule.forRoot(config),
         AppRoutingModule,
         HttpClientModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})

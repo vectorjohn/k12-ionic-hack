@@ -12,4 +12,8 @@ export class AnnouncementsPage implements OnInit {
   ngOnInit() {
   }
 
+    // ionViewDidEnter() {
+    //     this.getData();
+    // }
+
 }

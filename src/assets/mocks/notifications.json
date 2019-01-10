@@ -51,10 +51,10 @@
   ],
   "messages": [
     {
-      "id": 1234,
+      "id": 1,
       "name": "Nice job on the quiz!",
       "summary": "from Mr. Teacher",
-      "time": "due 3h ago|timestamp",
+      "time": "due 3h ago",
       "description": "blah blah blah blah.",
       "type": "a|b|c",
       "status": "success|warning|danger",
