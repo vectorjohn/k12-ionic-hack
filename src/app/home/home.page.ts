@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Notifications} from '../models/notification-item';
 import {NotificationService} from '../services/notification/notification.service';
 import {Observable} from 'rxjs/index';
@@ -31,7 +31,7 @@ export class HomePage implements OnInit {
         });
     }
 
-    private async updateName(): void {
+    private async updateName(): Promise<void> {
         this.name = await this.loginService.getLogin();
     }
 

@@ -53,6 +53,7 @@ export class NotificationService extends BaseService<Notifications, Notification
     }
 
     async notifyChat(msg) {
+        this.toastController.dismiss();
         const toast = await this.toastController.create({
             message: msg,
             position: 'top',
@@ -65,6 +66,7 @@ export class NotificationService extends BaseService<Notifications, Notification
     }
 
     async notifyHide() {
+        this.toastController.dismiss();
         const toast = await this.toastController.create({
             message: 'This item is temporarily hidden.',
             duration: 2000
@@ -73,6 +75,7 @@ export class NotificationService extends BaseService<Notifications, Notification
     }
 
     async notifyDownload(n: string) {
+        this.toastController.dismiss();
         const toast = await this.toastController.create({
             message: 'Downloading ' + n + 'for offline use',
             duration: 2000
