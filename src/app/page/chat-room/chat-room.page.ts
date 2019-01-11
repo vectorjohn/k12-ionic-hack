@@ -30,7 +30,8 @@ export class ChatRoomPage extends BasePage {
         super(loginService, modal);
 
         this.getMessages().subscribe(message => {
-            this.messages.push(message);
+            console.log('pushing message');
+            this.messages = this.messages.concat(message);
             this.history.addMessage(message);
         });
         this.getUsers().subscribe(data => {
@@ -43,8 +44,6 @@ export class ChatRoomPage extends BasePage {
                 }
             }
         });
-
-        this.loginService.getLogin().then(n => this.nickname = n);
     }
 
     ngOnInit() {
@@ -60,7 +59,10 @@ export class ChatRoomPage extends BasePage {
 
     joinChat() {
         this.socket.connect();
-        this.socket.emit('set-nickname', this.nickname);
+        this.loginService.getLogin().then(n => {
+            this.nickname = n;
+            this.socket.emit('set-nickname', this.nickname);
+        });
     }
 
 
