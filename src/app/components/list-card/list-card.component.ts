@@ -29,7 +29,7 @@ export class ListCardComponent {
         }
     }
 
-    public pin(item:NotificationItem): void {
+    public pin(item: NotificationItem): void {
         item.pinned = true;
         this.notifications.pin(item.name);
     }

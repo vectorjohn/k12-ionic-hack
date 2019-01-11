@@ -74,7 +74,7 @@ export class NotificationService extends BaseService<Notifications, Notification
 
     async notifyDownload(n: string) {
         const toast = await this.toastController.create({
-            message: 'Downloading ' + n + 'for offline use',
+            message: 'Downloading ' + n + ' for offline use',
             duration: 2000
         });
         toast.present();

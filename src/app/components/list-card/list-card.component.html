@@ -13,9 +13,9 @@
       <ng-template ngFor let-i [ngForOf]="items">
         <ion-item>
           <ion-label>
-            <h2>{{i.name}} <ion-icon *ngIf="i.icon" name="{{i.icon}}"></ion-icon></h2>
+            <h2>{{i.name}}</h2>
             <h3>{{i.description}}</h3>
-            <p><ion-icon *ngIf="i.time" name="timer" color="{{i.status}}"></ion-icon>{{i.time}}</p>
+            <p><ion-icon *ngIf="i.pinned" name="ribbon"></ion-icon><ion-icon *ngIf="i.time" name="timer" color="{{i.status}}"></ion-icon>{{i.time}}</p>
           </ion-label>
           <ion-fab vertical="top" horizontal="end">
             <ion-fab-button size="small" color="light">
@@ -24,6 +24,9 @@
               </ion-avatar>
             </ion-fab-button>
             <ion-fab-list side="start">
+              <ion-fab-button>
+                <ion-icon name="ribbon" (click)="pin(i)"></ion-icon>
+              </ion-fab-button>
               <ion-fab-button>
                 <ion-icon name="close" (click)="removeItem(i.id)"></ion-icon>
               </ion-fab-button>
