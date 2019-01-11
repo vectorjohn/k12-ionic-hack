@@ -4,6 +4,9 @@ import {Socket} from 'ng-socket-io';
 import {Observable} from 'rxjs/index';
 import {NotificationService} from '../../services/notification/notification.service';
 import {LoginService} from '../../services/login/login.service';
+import {Message} from '../../models/message';
+import {ChatService} from '../../services/chat/chat.service';
+import {first} from 'rxjs/operators';
 
 @Component({
     selector: 'app-chat-room',
@@ -13,17 +16,19 @@ import {LoginService} from '../../services/login/login.service';
 export class ChatRoomPage implements OnInit {
 
     nickname: string;
-    messages = [];
+    messages: Message[] = [];
     message = '';
     @ViewChild('chats') mahChats: ElementRef;
 
     constructor(private socket: Socket,
                 private toast: ToastController,
                 private notify: NotificationService,
-                private loginService: LoginService) {
+                private loginService: LoginService,
+                private history: ChatService) {
 
         this.getMessages().subscribe(message => {
             this.messages.push(message);
+            this.history.addMessage(message);
         });
         this.getUsers().subscribe(data => {
             const user = data['user'];
@@ -40,11 +45,13 @@ export class ChatRoomPage implements OnInit {
     }
 
     ngOnInit() {
-
-    }
-
-    ionViewDidEnter() {
-        this.joinChat();
+        this.history.getMessages()
+            .pipe(first())
+            .subscribe((messages) => {
+                console.log('setting my messages', messages);
+                this.messages = messages;
+                this.joinChat();
+            });
     }
 
     joinChat() {
@@ -58,8 +65,8 @@ export class ChatRoomPage implements OnInit {
         this.message = '';
     }
 
-    getMessages() {
-        const observable = new Observable(observer => {
+    getMessages(): Observable<Message> {
+        const observable = new Observable<Message>(observer => {
             this.socket.on('message', (data) => {
                 observer.next(data);
             });
@@ -70,7 +77,7 @@ export class ChatRoomPage implements OnInit {
     getUsers() {
         const observable = new Observable(observer => {
             this.socket.on('users-changed', (data) => {
-                    observer.next(data);
+                observer.next(data);
             });
         });
         return observable;
