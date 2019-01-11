@@ -12,17 +12,16 @@
     <ion-list>
       <ng-template ngFor let-i [ngForOf]="items">
         <ion-item>
-          <ion-avatar slot="start">
-            <img src="{{i.img?i.img:'http://placekitten.com/150/151'}}"/>
-          </ion-avatar>
           <ion-label>
-            <h2>{{i.name}} <ion-icon *ngIf="i.icon" name="i.icon" color="{{i.status}}"></ion-icon></h2>
-            <h3>{{i.description}}</h3>
+            <h2>{{i.name}} </h2>
+            <h3>{{i.description}} <ion-icon *ngIf="i.icon" name="{{i.icon}}"></ion-icon></h3>
             <p><ion-icon *ngIf="i.time" name="timer" color="{{i.status}}"></ion-icon>{{i.time}}</p>
           </ion-label>
           <ion-fab vertical="top" horizontal="end">
             <ion-fab-button size="small" color="light">
-              <ion-icon name="more"></ion-icon>
+              <ion-avatar>
+                <img src="{{i.img?i.img:'http://placekitten.com/150/151'}}"/>
+              </ion-avatar>
             </ion-fab-button>
             <ion-fab-list side="start">
               <ion-fab-button>

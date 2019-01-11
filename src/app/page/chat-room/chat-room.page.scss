@@ -34,6 +34,21 @@
     width: 2em;
   }
 }
+.other_message:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 15px solid transparent;
+  border-right-color: #dcdcdc;
+  border-left: 0;
+  border-bottom: 0;
+  margin-top: -7.5px;
+  margin-left: -15px;
+}
+
 .my_message:after {
   content: '';
   position: absolute;

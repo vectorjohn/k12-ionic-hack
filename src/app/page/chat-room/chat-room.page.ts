@@ -11,7 +11,7 @@ import {Observable} from 'rxjs/index';
 })
 export class ChatRoomPage implements OnInit {
 
-    nickname = 'test name';
+    nickname = 'nick';
     messages = [];
     message = '';
     @ViewChild('chats') mahChats: ElementRef;
