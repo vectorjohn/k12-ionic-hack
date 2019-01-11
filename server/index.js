@@ -1,6 +1,11 @@
 let app = require('express')();
-let http = require('http').Server(app);
-let io = require('socket.io')(http);
+let fs = require('fs');
+let https = require('https').Server(Object.assign({}, app, {
+    key: fs.readFileSync(process.env.SSL_PEM, 'utf8'),
+    cert: fs.readFileSync(process.env.SSL_CRT, 'utf8')
+}));
+
+let io = require('socket.io')(https);
 
 io.on('connection', (socket) => {
 
@@ -12,7 +17,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('set-nickname', (nickname) => {
-        console.log('set-nickname', nickname);
+        console.log('set-nickname', nicknaame);
         socket.nickname = nickname;
         io.emit('users-changed', {user: nickname, event: 'joined'});
     });
@@ -25,6 +30,6 @@ io.on('connection', (socket) => {
 
 var port = process.env.PORT || 3001;
 
-http.listen(port, function () {
+https.listen(port, function () {
     console.log('listening in http://localhost:' + port);
 });
