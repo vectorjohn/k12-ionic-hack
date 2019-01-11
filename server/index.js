@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('set-nickname', (nickname) => {
-        console.log('set-nickname', nicknaame);
+        console.log('set-nickname', nickname);
         socket.nickname = nickname;
         io.emit('users-changed', {user: nickname, event: 'joined'});
     });
