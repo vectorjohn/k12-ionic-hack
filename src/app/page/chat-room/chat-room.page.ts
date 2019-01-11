@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ToastController} from '@ionic/angular';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {ModalController, ToastController} from '@ionic/angular';
 import {Socket} from 'ng-socket-io';
 import {Observable} from 'rxjs/index';
 import {NotificationService} from '../../services/notification/notification.service';
@@ -7,13 +7,14 @@ import {LoginService} from '../../services/login/login.service';
 import {Message} from '../../models/message';
 import {ChatService} from '../../services/chat/chat.service';
 import {first} from 'rxjs/operators';
+import {BasePage} from '../base.page';
 
 @Component({
     selector: 'app-chat-room',
     templateUrl: './chat-room.page.html',
     styleUrls: ['./chat-room.page.scss'],
 })
-export class ChatRoomPage implements OnInit {
+export class ChatRoomPage extends BasePage {
 
     nickname: string;
     messages: Message[] = [];
@@ -23,8 +24,10 @@ export class ChatRoomPage implements OnInit {
     constructor(private socket: Socket,
                 private toast: ToastController,
                 private notify: NotificationService,
-                private loginService: LoginService,
-                private history: ChatService) {
+                private history: ChatService,
+                protected loginService: LoginService,
+                protected modal: ModalController) {
+        super(loginService, modal);
 
         this.getMessages().subscribe(message => {
             this.messages.push(message);
@@ -45,6 +48,7 @@ export class ChatRoomPage implements OnInit {
     }
 
     ngOnInit() {
+        super.ngOnInit();
         this.history.getMessages()
             .pipe(first())
             .subscribe((messages) => {

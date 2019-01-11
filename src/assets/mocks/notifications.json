@@ -8,7 +8,6 @@
       "type": "overview",
       "status": "warning",
       "img": "/assets/images/backgrounds/class/cheetah.jpg",
-      "icon": "iconName",
       "launch": "/some/path?id=123"
     },
     {

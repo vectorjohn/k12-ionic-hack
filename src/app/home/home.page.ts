@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Notifications} from '../models/notification-item';
 import {NotificationService} from '../services/notification/notification.service';
 import {Observable} from 'rxjs/index';
 import {LoginService} from '../services/login/login.service';
 import {ModalController} from '@ionic/angular';
-import {LoginModalComponent} from '../login-modal/login-modal.component';
+import {BasePage} from '../page/base.page';
 
 @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage extends BasePage {
 
     notifications$: Observable<Notifications>;
     showOverdue = true;
@@ -22,17 +22,14 @@ export class HomePage implements OnInit {
     constructor(private notificationService: NotificationService,
                 protected loginService: LoginService,
                 protected modal: ModalController) {
+        super(loginService, modal);
     }
 
     ngOnInit(): void {
-        this.openLoginModalAsNeeded();
+        super.ngOnInit();
         this.loginService.changed.subscribe(() => {
             this.updateName();
         });
-    }
-
-    private async updateName(): Promise<void> {
-        this.name = await this.loginService.getLogin();
     }
 
     ionViewDidEnter() {
@@ -40,12 +37,8 @@ export class HomePage implements OnInit {
         this.notifications$ = this.notificationService.getNotifications();
     }
 
-    public async openLoginModalAsNeeded() {
-        const hasLogin = await this.loginService.hasLogin();
-        if (!hasLogin) {
-            const m = await this.modal.create({component: LoginModalComponent});
-            await m.present();
-        }
+    private async updateName(): Promise<void> {
+        this.name = await this.loginService.getLogin();
     }
 
     hideOverdue(hide) {
