@@ -17,7 +17,7 @@ export class HomePage implements OnInit {
     showOverdue = true;
     showUpcoming = true;
     showMessages = true;
-    @Input() name: string;
+    name: string;
 
     constructor(private notificationService: NotificationService,
                 protected loginService: LoginService,
@@ -26,10 +26,17 @@ export class HomePage implements OnInit {
 
     ngOnInit(): void {
         this.openLoginModalAsNeeded();
+        this.loginService.changed.subscribe(() => {
+            this.updateName();
+        });
     }
 
-    async ionViewDidEnter() {
+    private async updateName(): void {
         this.name = await this.loginService.getLogin();
+    }
+
+    ionViewDidEnter() {
+        this.updateName();
         this.notifications$ = this.notificationService.getNotifications();
     }
 
