@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {Message} from '../../models/message';
-import {Observable, Subject} from 'rxjs/Rx';
+import {Observable, ReplaySubject, Subject} from 'rxjs/Rx';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +10,7 @@ export class ChatService {
     private MESSAGES = 'messages';
 
     messages: Message[] = [];
-    messages$: Subject<Message[]> = new Subject<Message[]>();
+    messages$: Subject<Message[]> = new ReplaySubject<Message[]>(1);
 
     constructor(protected storage: Storage) {
         this.storage.ready()
