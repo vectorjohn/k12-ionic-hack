@@ -15,7 +15,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { NicknameModalComponent } from './components/nickname-modal/nickname-modal.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://boatfights.com:3001', options: {} };
+const config: SocketIoConfig = { url: 'https://boatfights.com:3001', options: {} };
 
 @NgModule({
     declarations: [AppComponent, NicknameModalComponent],

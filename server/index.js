@@ -1,7 +1,7 @@
 let app = require('express')();
 let fs = require('fs');
 let https = require('https').Server(Object.assign({}, app, {
-    key: fs.readFileSync(process.env.SSL_PEM, 'utf8'),
+    key: fs.readFileSync(process.env.SSL_KEY, 'utf8'),
     cert: fs.readFileSync(process.env.SSL_CRT, 'utf8')
 }));
 
