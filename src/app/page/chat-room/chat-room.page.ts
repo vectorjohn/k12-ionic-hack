@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ModalController, ToastController} from '@ionic/angular';
 import {NicknameModalComponent} from '../../components/nickname-modal/nickname-modal.component';
 import {Socket} from 'ng-socket-io';
@@ -11,9 +11,10 @@ import {Observable} from 'rxjs/index';
 })
 export class ChatRoomPage implements OnInit {
 
-    nickname= 'test name';
+    nickname = 'test name';
     messages = [];
     message = '';
+    @ViewChild('chats') mahChats: ElementRef;
 
     constructor(private modal: ModalController,
                 private socket: Socket,
@@ -48,7 +49,6 @@ export class ChatRoomPage implements OnInit {
     joinChat() {
         this.socket.connect();
         this.socket.emit('set-nickname', this.nickname);
-        // this.navCtrl.push('ChatRoomPage', { nickname: this.nickname });
     }
 
 
@@ -89,5 +89,11 @@ export class ChatRoomPage implements OnInit {
             duration: 2000
         });
         toast.present();
+    }
+
+    scrollToBottom() {
+        try {
+            this.mahChats.nativeElement.scrollTop = this.mahChats.nativeElement.scrollHeight;
+        } catch (err) {}
     }
 }

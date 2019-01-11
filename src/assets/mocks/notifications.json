@@ -6,7 +6,7 @@
       "time": "Due 3h ago",
       "description": "Assignment: 1.03 Quiz: Expressions",
       "type": "overview",
-      "status": "success|warning|danger",
+      "status": "warning",
       "img": "/assets/images/backgrounds/class/cheetah.jpg",
       "icon": "iconName",
       "launch": "/some/path?id=123"
@@ -17,35 +17,30 @@
       "time": "Due 1h ago",
       "description": "Assignment: History and A History of US",
       "type": "overview",
-      "status": "success|warning|danger",
+      "status": "warning",
       "img": "/assets/images/backgrounds/class/road.jpg",
-      "icon": "iconName",
       "launch": "/some/path?id=123"
     }
   ],
   "upcoming": [
     {
       "id": 3,
-      "name": "something is overdue",
-      "summary": "Class Name",
-      "time": "due 3h ago|timestamp",
-      "description": "blah blah blah blah.",
-      "type": "a|b|c",
-      "status": "success|warning|danger",
-      "img": "/assets/images/backgrounds/class/road.jpg",
-      "icon": "iconName",
+      "name": "Course: Algebra II",
+      "time": "Due Today",
+      "description": "Assignment: 4.2 Polynomials",
+      "type": "overview",
+      "status": "success",
+      "img": "/assets/images/backgrounds/class/ladybug.jpg",
       "launch": "/some/path?id=123"
     },
     {
       "id": 4,
-      "name": "something is overdue",
-      "summary": "Class Name",
-      "time": "due 3h ago|timestamp",
-      "description": "blah blah blah blah.",
-      "type": "a|b|c",
-      "status": "success|warning|danger",
-      "img": "/assets/images/backgrounds/class/road.jpg",
-      "icon": "iconName",
+      "name": "Course: Music Fundamentals",
+      "time": "Due Tomorrow",
+      "description": "Assignment: Listen to Vanilla Ice",
+      "type": "",
+      "status": "success",
+      "img": "/assets/images/backgrounds/class/dragonfly.jpg",
       "launch": "/some/path?id=123"
     }
   ],
@@ -54,11 +49,9 @@
       "id": 1,
       "name": "Nice job on the quiz!",
       "summary": "from Mr. Teacher",
-      "time": "due 3h ago",
-      "description": "blah blah blah blah.",
-      "type": "a|b|c",
-      "status": "success|warning|danger",
-      "icon": "iconName",
+      "img": "/assets/images/avatars/user-2.png",
+      "status": "success",
+      "icon": "thumbs-up",
       "launch": "/some/path?id=123"
     }
   ]
