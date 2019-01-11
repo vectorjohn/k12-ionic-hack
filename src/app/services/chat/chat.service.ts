@@ -17,7 +17,7 @@ export class ChatService {
             .then(() => this.storage.get(this.MESSAGES))
             .then(val => {
                 this.messages = val || [];
-                this.messages$.next(this.messages);
+                this.messages$.next(this.messages.slice());
             });
     }
 
