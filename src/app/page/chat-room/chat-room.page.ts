@@ -3,6 +3,7 @@ import {ModalController, ToastController} from '@ionic/angular';
 import {NicknameModalComponent} from '../../components/nickname-modal/nickname-modal.component';
 import {Socket} from 'ng-socket-io';
 import {Observable} from 'rxjs/index';
+import {NotificationService} from '../../services/notification/notification.service';
 
 @Component({
     selector: 'app-chat-room',
@@ -18,7 +19,8 @@ export class ChatRoomPage implements OnInit {
 
     constructor(private modal: ModalController,
                 private socket: Socket,
-                private toast: ToastController) {
+                private toast: ToastController,
+                private notify: NotificationService) {
 
         this.getMessages().subscribe(message => {
             this.messages.push(message);
@@ -26,9 +28,9 @@ export class ChatRoomPage implements OnInit {
         this.getUsers().subscribe(data => {
             const user = data['user'];
             if (data['event'] === 'left') {
-                this.showToast('User left: ' + user);
+                this.notify.notifyChat('User left: ' + user);
             } else {
-                this.showToast('User joined: ' + user);
+                this.notify.notifyChat('User joined: ' + user);
             }
         });
     }
@@ -81,14 +83,6 @@ export class ChatRoomPage implements OnInit {
 
     getDate(): Date {
         return new Date();
-    }
-
-    async showToast(msg) {
-        const toast = await this.toast.create({
-            message: msg,
-            duration: 2000
-        });
-        toast.present();
     }
 
     scrollToBottom() {

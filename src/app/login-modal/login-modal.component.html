@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-row>
+    <ion-col>
+      <ion-list inset>
+        <ion-item>
+          <ion-input placeholder="Username" type="text" [(ngModel)]="username"></ion-input>
+        </ion-item>
+        <!--<ion-item>
+          <ion-input placeholder="Password" type="password" readonly></ion-input>
+        </ion-item>-->
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" color="primary" [disabled]="invalid()" (click)="save()">Save</ion-button>
+  </ion-toolbar>
+</ion-footer>
