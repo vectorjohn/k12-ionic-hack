@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ToastController} from '@ionic/angular';
+import {NotificationService} from '../../services/notification/notification.service';
 
 @Component({
     selector: 'app-course-card',
@@ -17,22 +18,14 @@ export class CourseCardComponent implements OnInit {
 
     // Assignments?
 
-
-    constructor(public toastController: ToastController) {
+    constructor(private notificationService: NotificationService) {
     }
 
     ngOnInit() {
     }
 
     startDownload(n: string): void {
-        this.presentToast(n);
+        this.notificationService.notifyDownload(n);
     }
 
-    async presentToast(n: string) {
-        const toast = await this.toastController.create({
-                message: 'Downloading ' + n + 'for offline use',
-                duration: 2000
-            });
-        toast.present();
-    }
 }

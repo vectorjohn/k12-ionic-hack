@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ModalController, ToastController} from '@ionic/angular';
-import {NicknameModalComponent} from '../../components/nickname-modal/nickname-modal.component';
+import {ToastController} from '@ionic/angular';
 import {Socket} from 'ng-socket-io';
 import {Observable} from 'rxjs/index';
 import {NotificationService} from '../../services/notification/notification.service';
+import {LoginService} from '../../services/login/login.service';
 
 @Component({
     selector: 'app-chat-room',
@@ -12,27 +12,31 @@ import {NotificationService} from '../../services/notification/notification.serv
 })
 export class ChatRoomPage implements OnInit {
 
-    nickname = 'nick';
+    nickname: string;
     messages = [];
     message = '';
     @ViewChild('chats') mahChats: ElementRef;
 
-    constructor(private modal: ModalController,
-                private socket: Socket,
+    constructor(private socket: Socket,
                 private toast: ToastController,
-                private notify: NotificationService) {
+                private notify: NotificationService,
+                private loginService: LoginService) {
 
         this.getMessages().subscribe(message => {
             this.messages.push(message);
         });
         this.getUsers().subscribe(data => {
             const user = data['user'];
-            if (data['event'] === 'left') {
-                this.notify.notifyChat('User left: ' + user);
-            } else {
-                this.notify.notifyChat('User joined: ' + user);
+            if (user !== this.nickname) {
+                if (data['event'] === 'left') {
+                    this.notify.notifyChat('User left: ' + user);
+                } else {
+                    this.notify.notifyChat('User joined: ' + user);
+                }
             }
         });
+
+        this.loginService.getLogin().then(n => this.nickname = n);
     }
 
     ngOnInit() {
@@ -41,11 +45,6 @@ export class ChatRoomPage implements OnInit {
 
     ionViewDidEnter() {
         this.joinChat();
-    }
-
-    async openNicknameModal(): Promise<void> {
-        const m = await this.modal.create({component: NicknameModalComponent});
-        await m.present();
     }
 
     joinChat() {
@@ -71,7 +70,7 @@ export class ChatRoomPage implements OnInit {
     getUsers() {
         const observable = new Observable(observer => {
             this.socket.on('users-changed', (data) => {
-                observer.next(data);
+                    observer.next(data);
             });
         });
         return observable;
@@ -88,6 +87,7 @@ export class ChatRoomPage implements OnInit {
     scrollToBottom() {
         try {
             this.mahChats.nativeElement.scrollTop = this.mahChats.nativeElement.scrollHeight;
-        } catch (err) {}
+        } catch (err) {
+        }
     }
 }
