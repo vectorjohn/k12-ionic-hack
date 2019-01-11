@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NotificationItem} from '../../models/notification-item';
+import {NotificationService} from '../../services/notification/notification.service';
 
 @Component({
     selector: 'app-list-card',
@@ -14,7 +15,7 @@ export class ListCardComponent {
     @Input() icon = 'mail';
     @Output() hide = new EventEmitter<boolean>();
 
-    constructor() {
+    constructor(private notifications: NotificationService) {
     }
 
     public closeMe(): void {
@@ -26,6 +27,11 @@ export class ListCardComponent {
         if (this.items.length === 0) {
             this.closeMe();
         }
+    }
+
+    public pin(item:NotificationItem): void {
+        item.pinned = true;
+        this.notifications.pin(item.name);
     }
 
 }

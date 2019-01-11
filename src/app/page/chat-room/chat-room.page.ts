@@ -19,7 +19,19 @@ export class ChatRoomPage extends BasePage {
     nickname: string;
     messages: Message[] = [];
     message = '';
+    avatar: string;
     @ViewChild('chats') mahChats: ElementRef;
+
+    imgApi = [
+        'placekitten.com',
+        'fillmurray.com',
+        'stevensegallery.com',
+        'baconmockup.com'
+    ];
+
+    picsum = 'https://picsum.photos/200/300?image=';
+    picstart = 10;
+    picend = 1085;
 
     constructor(private socket: Socket,
                 private toast: ToastController,
@@ -28,6 +40,8 @@ export class ChatRoomPage extends BasePage {
                 protected loginService: LoginService,
                 protected modal: ModalController) {
         super(loginService, modal);
+
+    this.avatar = this.picsum + (Math.floor(Math.random() * this.picend)).toString();
 
         this.getMessages().subscribe(message => {
             console.log('pushing message');
@@ -65,9 +79,8 @@ export class ChatRoomPage extends BasePage {
         });
     }
 
-
     sendMessage() {
-        this.socket.emit('add-message', {text: this.message});
+        this.socket.emit('add-message', {text: this.message, avatar: this.avatar});
         this.message = '';
     }
 

@@ -13,8 +13,8 @@
       <ng-template ngFor let-i [ngForOf]="items">
         <ion-item>
           <ion-label>
-            <h2>{{i.name}} </h2>
-            <h3>{{i.description}} <ion-icon *ngIf="i.icon" name="{{i.icon}}"></ion-icon></h3>
+            <h2>{{i.name}} <ion-icon *ngIf="i.icon" name="{{i.icon}}"></ion-icon></h2>
+            <h3>{{i.description}}</h3>
             <p><ion-icon *ngIf="i.time" name="timer" color="{{i.status}}"></ion-icon>{{i.time}}</p>
           </ion-label>
           <ion-fab vertical="top" horizontal="end">

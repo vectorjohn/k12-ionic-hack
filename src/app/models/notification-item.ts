@@ -9,6 +9,7 @@ export interface NotificationItem {
     img?: string;
     icon?: string;
     launch?: string;
+    pinned?: boolean;
 }
 
 export class Notifications {
