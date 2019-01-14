@@ -1,5 +1,6 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ModalController, ToastController} from '@ionic/angular';
+// import {Content} from '@angular/compiler/src/render3/r3_ast';
 import {Socket} from 'ng-socket-io';
 import {Observable} from 'rxjs/index';
 import {NotificationService} from '../../services/notification/notification.service';
@@ -14,22 +15,24 @@ import {BasePage} from '../base.page';
     templateUrl: './chat-room.page.html',
     styleUrls: ['./chat-room.page.scss'],
 })
-export class ChatRoomPage extends BasePage {
+export class ChatRoomPage extends BasePage implements OnInit {
 
     nickname: string;
     messages: Message[] = [];
     message = '';
     avatar: string;
-    @ViewChild('chats') mahChats: ElementRef;
+    @ViewChild('chats') chats: ElementRef;
+    @ViewChild('content') content: any;
 
-    imgApi = [
-        'placekitten.com',
-        'fillmurray.com',
-        'stevensegallery.com',
-        'baconmockup.com'
-    ];
+    // imgApi = [
+    //     'placekitten.com',
+    //     'fillmurray.com',
+    //     'stevensegallery.com',
+    //     'baconmockup.com'
+    // ];
 
     picsum = 'https://picsum.photos/200/300?image=';
+    // fillmurray = 'https://www.fillmurray.com/100/100';
     picstart = 10;
     picend = 1085;
 
@@ -38,25 +41,32 @@ export class ChatRoomPage extends BasePage {
                 private notify: NotificationService,
                 private history: ChatService,
                 protected loginService: LoginService,
-                protected modal: ModalController) {
+                protected modal: ModalController,
+                private chatService: ChatService) {
         super(loginService, modal);
 
-    this.avatar = this.picsum + (Math.floor(Math.random() * this.picend)).toString();
+        this.avatar = this.picsum + (Math.floor(Math.random() * this.picend)).toString();
+
+        this.nickname = this.chatService.nickname;
 
         this.getMessages().subscribe(message => {
-            console.log('pushing message');
+            // console.log('pushing message');
             this.messages = this.messages.concat(message);
             this.history.addMessage(message);
         });
         this.getUsers().subscribe(data => {
             const user = data['user'];
-            if (user !== this.nickname) {
-                if (data['event'] === 'left') {
-                    this.notify.notifyChat('User left: ' + user);
-                } else {
-                    this.notify.notifyChat('User joined: ' + user);
+            this.loginService.getLogin().then(n => {
+                this.nickname = n;
+                if (user !== this.nickname) {
+                    if (data['event'] === 'left') {
+                        this.notify.notifyChat('User left: ' + user);
+                    } else {
+                        this.notify.notifyChat('User joined: ' + user);
+                    }
                 }
-            }
+            });
+
         });
     }
 
@@ -65,29 +75,35 @@ export class ChatRoomPage extends BasePage {
         this.history.getMessages()
             .pipe(first())
             .subscribe((messages) => {
-                console.log('setting my messages', messages);
+                // console.log('setting my messages', messages);
                 this.messages = messages;
                 this.joinChat();
             });
     }
 
+    ionViewDidEnter() {
+        this.scrollToBottom();
+    }
+
+    ionViewWillLeave() {
+        this.socket.disconnect();
+    }
+
     joinChat() {
-        this.socket.connect();
-        this.loginService.getLogin().then(n => {
-            this.nickname = n;
-            this.socket.emit('set-nickname', this.nickname);
-        });
+        this.chatService.join();
     }
 
     sendMessage() {
-        this.socket.emit('add-message', {text: this.message, avatar: this.avatar});
+        this.chatService.send(this.message, this.avatar);
         this.message = '';
+        this.scrollToBottom();
     }
 
     getMessages(): Observable<Message> {
         const observable = new Observable<Message>(observer => {
             this.socket.on('message', (data) => {
                 observer.next(data);
+                this.scrollToBottom();
             });
         });
         return observable;
@@ -96,24 +112,20 @@ export class ChatRoomPage extends BasePage {
     getUsers() {
         const observable = new Observable(observer => {
             this.socket.on('users-changed', (data) => {
+                console.log(data);
                 observer.next(data);
             });
         });
         return observable;
     }
 
-    ionViewWillLeave() {
-        this.socket.disconnect();
+
+    scrollToBottom() {
+        this.content.scrollToBottom(300);
     }
+
 
     getDate(): Date {
         return new Date();
-    }
-
-    scrollToBottom() {
-        try {
-            this.mahChats.nativeElement.scrollTop = this.mahChats.nativeElement.scrollHeight;
-        } catch (err) {
-        }
     }
 }

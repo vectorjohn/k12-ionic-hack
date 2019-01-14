@@ -13,15 +13,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
-        <ion-grid>
+<ion-content padding #content>
+    <ion-grid>
             <ion-row *ngFor="let message of messages; let last = last">
 
+                <!-- other user chats -->
                 <ion-col size="9" *ngIf="message.from !== nickname" class="message other_message">
 
                     <ion-avatar>
-                        <img src="{{message.avatar?message.avatar:'https://www.fillmurray.com/100/100'}}"/>
+                        <img src="{{message.avatar}}" onerror="this.src='https://www.fillmurray.com/100/100'"/>
                     </ion-avatar>
 
                     <span class="user_name">{{ message.from }}:</span><br>
@@ -30,16 +30,14 @@
 
                 </ion-col>
 
+                <!-- my chats -->
                 <ion-col offset="3" size="9" *ngIf="message.from === nickname" class="message my_message">
                     <span>{{ message.text }}</span>
                     <div class="time">{{message.created | date:'h:mm'}}</div>
                 </ion-col>
 
-                {{last ? scrollToBottom() : ''}}
-
             </ion-row>
         </ion-grid>
-
 </ion-content>
 
 <ion-footer>
