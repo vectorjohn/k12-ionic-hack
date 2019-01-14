@@ -1,13 +1,30 @@
-let app = require('express')();
+import express = require('express');
+let app = express();
 let fs = require('fs');
-let https = require('https').Server(Object.assign({}, app, {
-    key: fs.readFileSync(process.env.SSL_KEY, 'utf8'),
-    cert: fs.readFileSync(process.env.SSL_CRT, 'utf8')
-}));
+let https: any;
+let baseUrl: string;
+if (process.env.SSL_KEY && process.env.SSL_CRT) {
+  console.log('Using secure https server');
+  https = require('https').Server({...app, ...{
+      key: fs.readFileSync(process.env.SSL_KEY, 'utf8'),
+      cert: fs.readFileSync(process.env.SSL_CRT, 'utf8')
+  }});
+  baseUrl = 'https://localhost';
+}
+else {
+  console.log('Using insecure http server');
+  https = require('http').Server(app);
+  baseUrl = 'http://localhost';
+}
 
-let io = require('socket.io')(https);
+import socketio from 'socket.io';
+let io = socketio(https);
 
-io.on('connection', (socket) => {
+interface MySocket extends socketio.Socket {
+  nickname?: string;
+}
+
+io.on('connection', (socket: MySocket) => {
 
     console.log('NEW CONNECTION');
 
