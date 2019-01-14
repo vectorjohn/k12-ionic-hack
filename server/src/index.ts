@@ -27,6 +27,7 @@ interface MySocket extends socketio.Socket {
 interface Message {
   text: string;
   from: string;
+  avatar?: string;
   created: Date;
 }
 
@@ -56,6 +57,7 @@ io.on('connection', (socket: MySocket) => {
         const emitMessage: Message = {
           text: message.text,
           from: socket.nickname || 'Unknown User', //should not be allowed
+          avatar: message.avatar,
           created: new Date()
         };
         history.push(emitMessage);

@@ -44,6 +44,7 @@ io.on('connection', (socket) => {
         const emitMessage = {
             text: message.text,
             from: socket.nickname || 'Unknown User',
+            avatar: message.avatar,
             created: new Date()
         };
         history.push(emitMessage);
@@ -52,5 +53,5 @@ io.on('connection', (socket) => {
 });
 var port = process.env.PORT || 3001;
 https.listen(port, function () {
-    console.log('listening in http://localhost:' + port);
+    console.log('listening in ' + baseUrl + ':' + port);
 });
