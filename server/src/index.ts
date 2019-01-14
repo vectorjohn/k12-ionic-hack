@@ -66,5 +66,5 @@ io.on('connection', (socket: MySocket) => {
 var port = process.env.PORT || 3001;
 
 https.listen(port, function () {
-    console.log('listening in http://localhost:' + port);
+    console.log('listening in ' + baseUrl + ':' + port);
 });
