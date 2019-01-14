@@ -24,6 +24,14 @@ interface MySocket extends socketio.Socket {
   nickname?: string;
 }
 
+interface Message {
+  text: string;
+  from: string;
+  created: Date;
+}
+
+const history: Message[] = [];
+
 io.on('connection', (socket: MySocket) => {
 
     console.log('NEW CONNECTION');
@@ -37,11 +45,21 @@ io.on('connection', (socket: MySocket) => {
         console.log('set-nickname', nickname);
         socket.nickname = nickname;
         io.emit('users-changed', {user: nickname, event: 'joined'});
+        //send the last 100 messages to the new user
+        history.slice(-100).forEach(msg => {
+          socket.emit('add-message', msg);
+        })
     });
 
     socket.on('add-message', (message) => {
         console.log('msg:', socket.nickname, message.text);
-        io.emit('message', {text: message.text, from: socket.nickname, created: new Date()});
+        const emitMessage: Message = {
+          text: message.text,
+          from: socket.nickname || 'Unknown User', //should not be allowed
+          created: new Date()
+        };
+        history.push(emitMessage);
+        io.emit('message', emitMessage);
     });
 });
 
