@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalController, ToastController} from '@ionic/angular';
 // import {Content} from '@angular/compiler/src/render3/r3_ast';
 import {Socket} from 'ng-socket-io';
@@ -7,15 +7,15 @@ import {NotificationService} from '../../services/notification/notification.serv
 import {LoginService} from '../../services/login/login.service';
 import {Message} from '../../models/message';
 import {ChatService} from '../../services/chat/chat.service';
-import {first} from 'rxjs/operators';
 import {BasePage} from '../base.page';
+import {Subscription} from 'rxjs/Rx';
 
 @Component({
     selector: 'app-chat-room',
     templateUrl: './chat-room.page.html',
     styleUrls: ['./chat-room.page.scss'],
 })
-export class ChatRoomPage extends BasePage implements OnInit {
+export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
 
     nickname: string;
     messages: Message[] = [];
@@ -24,16 +24,13 @@ export class ChatRoomPage extends BasePage implements OnInit {
     @ViewChild('chats') chats: ElementRef;
     @ViewChild('content') content: any;
 
-    // imgApi = [
-    //     'placekitten.com',
-    //     'fillmurray.com',
-    //     'stevensegallery.com',
-    //     'baconmockup.com'
-    // ];
+    messagesSub: Subscription;
+    usersSub: Subscription;
+
+    viewEntered = false;
+    shouldConnect = true;
 
     picsum = 'https://picsum.photos/200/300?image=';
-    // fillmurray = 'https://www.fillmurray.com/100/100';
-    picstart = 10;
     picend = 1085;
 
     constructor(private socket: Socket,
@@ -49,12 +46,10 @@ export class ChatRoomPage extends BasePage implements OnInit {
 
         this.nickname = this.chatService.nickname;
 
-        this.getMessages().subscribe(message => {
-            // console.log('pushing message');
+        this.messagesSub = this.getMessages().subscribe(message => {
             this.messages = this.messages.concat(message);
-            // this.history.addMessage(message);
         });
-        this.getUsers().subscribe(data => {
+        this.usersSub = this.getUsers().subscribe(data => {
             const user = data['user'];
             this.loginService.getLogin().then(n => {
                 this.nickname = n;
@@ -72,34 +67,37 @@ export class ChatRoomPage extends BasePage implements OnInit {
 
     ngOnInit() {
         super.ngOnInit();
+        this.shouldConnect = true;
         this.joinChat();
-        // TODO: figure out hwo to make this interact nicely with the server
-        //       sending recent messages (to avoid duplicates)
-        // this.history.getMessages()
-        //     .pipe(first())
-        //     .subscribe((messages) => {
-        //         console.log('setting my messages', messages);
-        //         this.messages = messages;
-        //         this.joinChat();
-        //     });
+    }
+
+    ngOnDestroy() {
+        this.messagesSub.unsubscribe();
+        this.usersSub.unsubscribe();
     }
 
     ionViewDidEnter() {
+        this.viewEntered = true;
         this.scrollToBottom();
     }
 
     ionViewWillLeave() {
+        this.viewEntered = false;
+        this.shouldConnect = false;
         this.socket.disconnect();
     }
 
     joinChat() {
         this.socket.on('disconnect', () => {
-            this.reconnect();
+            if (this.shouldConnect) {
+                this.reconnect();
+            }
         });
-        this.reconnect();
+        this.connect();
     }
 
-    reconnect() {
+    connect() {
+        console.log('connect');
         this.socket.connect();
         this.loginService.getLogin().then(n => {
             this.messages = [];
@@ -108,10 +106,20 @@ export class ChatRoomPage extends BasePage implements OnInit {
         });
     }
 
+    reconnect() {
+        console.log('reconnect');
+        this.socket.connect();
+        this.loginService.getLogin().then(n => {
+            // this.messages = [];
+            this.nickname = n;
+            this.socket.emit('set-nickname', this.nickname);
+        });
+    }
+
     sendMessage() {
         this.chatService.send(this.message, this.avatar);
         this.message = '';
-        this.scrollToBottom();
+        // this.scrollToBottom();
     }
 
     getMessages(): Observable<Message> {
@@ -137,7 +145,10 @@ export class ChatRoomPage extends BasePage implements OnInit {
 
 
     scrollToBottom() {
-        this.content.scrollToBottom(300);
+        if (this.viewEntered) {
+            console.log('scrolling...');
+            this.content.scrollToBottom(300);
+        }
     }
 
 
