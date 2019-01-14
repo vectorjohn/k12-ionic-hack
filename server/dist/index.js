@@ -24,6 +24,7 @@ else {
 const socket_io_1 = __importDefault(require("socket.io"));
 let io = socket_io_1.default(https);
 const history = [];
+const MAX_HISTORY = 100;
 io.on('connection', (socket) => {
     console.log('NEW CONNECTION');
     socket.on('disconnect', function () {
@@ -34,9 +35,9 @@ io.on('connection', (socket) => {
         console.log('set-nickname', nickname);
         socket.nickname = nickname;
         io.emit('users-changed', { user: nickname, event: 'joined' });
-        //send the last 100 messages to the new user
-        history.slice(-100).forEach(msg => {
-            socket.emit('add-message', msg);
+        //send the last MAX_HISTORY messages to the new user
+        history.slice(-MAX_HISTORY).forEach(msg => {
+            socket.emit('message', msg);
         });
     });
     socket.on('add-message', (message) => {

@@ -32,6 +32,7 @@ interface Message {
 }
 
 const history: Message[] = [];
+const MAX_HISTORY = 100;
 
 io.on('connection', (socket: MySocket) => {
 
@@ -46,9 +47,9 @@ io.on('connection', (socket: MySocket) => {
         console.log('set-nickname', nickname);
         socket.nickname = nickname;
         io.emit('users-changed', {user: nickname, event: 'joined'});
-        //send the last 100 messages to the new user
-        history.slice(-100).forEach(msg => {
-          socket.emit('add-message', msg);
+        //send the last MAX_HISTORY messages to the new user
+        history.slice(-MAX_HISTORY).forEach(msg => {
+          socket.emit('message', msg);
         })
     });
 
