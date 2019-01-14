@@ -52,7 +52,7 @@ export class ChatRoomPage extends BasePage implements OnInit {
         this.getMessages().subscribe(message => {
             // console.log('pushing message');
             this.messages = this.messages.concat(message);
-            this.history.addMessage(message);
+            // this.history.addMessage(message);
         });
         this.getUsers().subscribe(data => {
             const user = data['user'];
@@ -72,13 +72,16 @@ export class ChatRoomPage extends BasePage implements OnInit {
 
     ngOnInit() {
         super.ngOnInit();
-        this.history.getMessages()
-            .pipe(first())
-            .subscribe((messages) => {
-                // console.log('setting my messages', messages);
-                this.messages = messages;
-                this.joinChat();
-            });
+        this.joinChat();
+        // TODO: figure out hwo to make this interact nicely with the server
+        //       sending recent messages (to avoid duplicates)
+        // this.history.getMessages()
+        //     .pipe(first())
+        //     .subscribe((messages) => {
+        //         console.log('setting my messages', messages);
+        //         this.messages = messages;
+        //         this.joinChat();
+        //     });
     }
 
     ionViewDidEnter() {
@@ -90,7 +93,19 @@ export class ChatRoomPage extends BasePage implements OnInit {
     }
 
     joinChat() {
-        this.chatService.join();
+        this.socket.on('disconnect', () => {
+            this.reconnect();
+        });
+        this.reconnect();
+    }
+
+    reconnect() {
+        this.socket.connect();
+        this.loginService.getLogin().then(n => {
+            this.messages = [];
+            this.nickname = n;
+            this.socket.emit('set-nickname', this.nickname);
+        });
     }
 
     sendMessage() {
@@ -102,6 +117,7 @@ export class ChatRoomPage extends BasePage implements OnInit {
     getMessages(): Observable<Message> {
         const observable = new Observable<Message>(observer => {
             this.socket.on('message', (data) => {
+                console.log('socket on message', data);
                 observer.next(data);
                 this.scrollToBottom();
             });
