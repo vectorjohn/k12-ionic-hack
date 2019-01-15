@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalController, ToastController} from '@ionic/angular';
-// import {Content} from '@angular/compiler/src/render3/r3_ast';
 import {Socket} from 'ng-socket-io';
 import {Observable} from 'rxjs/index';
 import {NotificationService} from '../../services/notification/notification.service';
