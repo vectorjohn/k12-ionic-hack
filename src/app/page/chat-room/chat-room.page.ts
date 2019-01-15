@@ -21,14 +21,13 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
     messages: Message[] = [];
     message = '';
     avatar: string;
-    @ViewChild('chats') chats: ElementRef;
     @ViewChild('content') content: any;
 
     messagesSub: Subscription;
     usersSub: Subscription;
 
     viewEntered = false;
-    shouldConnect = true;
+    stayConnected = true;
 
     picsum = 'https://picsum.photos/200/300?image=';
     picend = 1085;
@@ -67,7 +66,7 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
 
     ngOnInit() {
         super.ngOnInit();
-        this.shouldConnect = true;
+        this.stayConnected = true;
         this.joinChat();
     }
 
@@ -83,14 +82,14 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
 
     ionViewWillLeave() {
         this.viewEntered = false;
-        this.shouldConnect = false;
+        this.stayConnected = false;
         this.socket.disconnect();
     }
 
     joinChat() {
         this.socket.on('disconnect', () => {
-            if (this.shouldConnect) {
-                this.reconnect();
+            if (this.stayConnected) {
+                this.connect();
             }
         });
         this.connect();
@@ -101,16 +100,6 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
         this.socket.connect();
         this.loginService.getLogin().then(n => {
             this.messages = [];
-            this.nickname = n;
-            this.socket.emit('set-nickname', this.nickname);
-        });
-    }
-
-    reconnect() {
-        console.log('reconnect');
-        this.socket.connect();
-        this.loginService.getLogin().then(n => {
-            // this.messages = [];
             this.nickname = n;
             this.socket.emit('set-nickname', this.nickname);
         });
@@ -146,7 +135,6 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
 
     scrollToBottom() {
         if (this.viewEntered) {
-            console.log('scrolling...');
             this.content.scrollToBottom(300);
         }
     }
