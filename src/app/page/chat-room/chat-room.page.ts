@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalController, ToastController} from '@ionic/angular';
 // import {Content} from '@angular/compiler/src/render3/r3_ast';
 import {Socket} from 'ng-socket-io';
@@ -8,7 +8,7 @@ import {LoginService} from '../../services/login/login.service';
 import {Message} from '../../models/message';
 import {ChatService} from '../../services/chat/chat.service';
 import {BasePage} from '../base.page';
-import {Subject, Subscription} from 'rxjs/Rx';
+import {Subject} from 'rxjs/Rx';
 import {fromEvent} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
 import {FromEventTarget} from 'rxjs/src/internal/observable/fromEvent';
