@@ -8,7 +8,20 @@ import {LoginService} from '../../services/login/login.service';
 import {Message} from '../../models/message';
 import {ChatService} from '../../services/chat/chat.service';
 import {BasePage} from '../base.page';
-import {Subscription} from 'rxjs/Rx';
+import {Subject, Subscription} from 'rxjs/Rx';
+import {fromEvent} from 'rxjs';
+import {takeUntil, tap} from 'rxjs/operators';
+import {FromEventTarget} from 'rxjs/src/internal/observable/fromEvent';
+
+interface Emitter<T> {
+    on: (event: string, callback: (T) => void) => void;
+    removeListener: (event: string, callback: (T) => void) => void;
+}
+
+interface UserEvent {
+    user: string;
+    event: 'left' | 'joined';
+}
 
 @Component({
     selector: 'app-chat-room',
@@ -23,11 +36,9 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
     avatar: string;
     @ViewChild('content') content: any;
 
-    messagesSub: Subscription;
-    usersSub: Subscription;
+    ngUnsubscribe$: Subject<void> = new Subject<void>();
 
     viewEntered = false;
-    stayConnected = true;
 
     picsum = 'https://picsum.photos/200/300?image=';
     picend = 1085;
@@ -45,15 +56,15 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
 
         this.nickname = this.chatService.nickname;
 
-        this.messagesSub = this.getMessages().subscribe(message => {
+        this.getMessages().pipe(takeUntil(this.ngUnsubscribe$)).subscribe((message: Message) => {
             this.messages = this.messages.concat(message);
         });
-        this.usersSub = this.getUsers().subscribe(data => {
-            const user = data['user'];
+        this.getUsers().pipe(takeUntil(this.ngUnsubscribe$)).subscribe((data: UserEvent) => {
+            const user = data.user;
             this.loginService.getLogin().then(n => {
                 this.nickname = n;
                 if (user !== this.nickname) {
-                    if (data['event'] === 'left') {
+                    if (data.event === 'left') {
                         this.notify.notifyChat('User left: ' + user);
                     } else {
                         this.notify.notifyChat('User joined: ' + user);
@@ -66,13 +77,13 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
 
     ngOnInit() {
         super.ngOnInit();
-        this.stayConnected = true;
         this.joinChat();
     }
 
     ngOnDestroy() {
-        this.messagesSub.unsubscribe();
-        this.usersSub.unsubscribe();
+        this.ngUnsubscribe$.next();
+        this.ngUnsubscribe$.complete();
+        this.socket.disconnect();
     }
 
     ionViewDidEnter() {
@@ -82,16 +93,14 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
 
     ionViewWillLeave() {
         this.viewEntered = false;
-        this.stayConnected = false;
-        this.socket.disconnect();
     }
 
     joinChat() {
-        this.socket.on('disconnect', () => {
-            if (this.stayConnected) {
+        fromEvent(this.toFromEventTarget(this.socket), 'disconnect')
+            .pipe(takeUntil(this.ngUnsubscribe$))
+            .subscribe(() => {
                 this.connect();
-            }
-        });
+            });
         this.connect();
     }
 
@@ -108,28 +117,19 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
     sendMessage() {
         this.chatService.send(this.message, this.avatar);
         this.message = '';
-        // this.scrollToBottom();
     }
 
     getMessages(): Observable<Message> {
-        const observable = new Observable<Message>(observer => {
-            this.socket.on('message', (data) => {
-                console.log('socket on message', data);
-                observer.next(data);
+        return fromEvent(this.toFromEventTarget<Message>(this.socket), 'message')
+            .pipe(tap((x) => {
+                console.log('message', x);
                 this.scrollToBottom();
-            });
-        });
-        return observable;
+            }));
     }
 
-    getUsers() {
-        const observable = new Observable(observer => {
-            this.socket.on('users-changed', (data) => {
-                console.log(data);
-                observer.next(data);
-            });
-        });
-        return observable;
+    getUsers(): Observable<UserEvent> {
+        return fromEvent(this.toFromEventTarget<UserEvent>(this.socket), 'users-changed')
+            .pipe(tap((x) => console.log('users-changed', x)));
     }
 
 
@@ -142,5 +142,12 @@ export class ChatRoomPage extends BasePage implements OnInit, OnDestroy {
 
     getDate(): Date {
         return new Date();
+    }
+
+    private toFromEventTarget<T>(emitter: Emitter<T>): FromEventTarget<T> {
+        return {
+            addEventListener: (event, listener) => emitter.on(event, listener),
+            removeEventListener: (event, listener) => emitter.removeListener(event, listener)
+        };
     }
 }
